@@ -1,0 +1,48 @@
+#!/bin/bash
+#PBS -m abe
+## Mail to user
+#PBS -M nick.nikzaddehaji@griffithuni.edu.au
+#PBS -V
+## Job name
+#PBS -N  coco2017_r101
+#PBS -q dljun
+#######PBS -q gpuq
+####Other options #PBS -q dlyao@n060 or #PBS -q workq@n060
+#PBS -W group_list=deeplearning -A deeplearning
+###Other options group_list=aspen -A aspen
+### Number of nodes:Number of CPUs:Number of threads per node
+#PBS -l select=1:ncpus=16:ngpus=2:mem=48gb,walltime=600:00:00
+#PBS -j oe
+### Add current shell environment to job (comment out if not needed)
+#PBS -V
+# The job's working directory
+cd $PBS_O_WORKDIR
+MASTERDIR=/scratch/s5108500/Nick/DeepModels/ObjDetection/mmdetection/
+cd $MASTERDIR
+##########module load anaconda/5.3.1py3
+##################module load anaconda3/2019.07py3
+####################source activate tensorflow-gpu
+#### faster_rcnn_r50_fpn_1x_voc0712
+#####retinanet_r50_fpn_1x_voc0712
+module load anaconda/5.3.1py3
+source activate nikzadpip
+export CUDA_HOME=/usr/local/cuda-11.0
+
+bash ./tools/dist_train.sh \
+	configs/mask_rcnn/mask_rcnn_r50_fpn_2x_coco.py \
+	2 \
+	--work-dir checkpoints/gsop_r50_inSegm
+
+bash ./tools/dist_train.sh \
+	configs/faster_rcnn/faster_rcnn_r50_fpn_2x_coco.py \
+	2 \
+	--work-dir checkpoints/gsop_r50 
+
+bash ./tools/dist_train.sh configs/faster_rcnn/faster_rcnn_r50_fpn_2x_coco.py 2 --work-dir checkpoints/gsop_r50
+
+
+####	--resume-from checkpoints/csa_r50/epoch_2.pth \	
+### CUDA_VISIBLE_DEVICES=0 PORT=29501 ./tools/dist_train.sh configs/faster_rcnn/faster_rcnn_r101_fpn_2x_coco.py 1
+##### python3.8 ./tools/train.py \
+####	configs/pascal_voc/retinanet_r50_fpn_1x_voc0712.py \
+#####	--work-dir results/voc07_retina_orig
