@@ -20,8 +20,8 @@ import numpy as np
 class CSAtt(nn.Module):
     def __init__(self, channel=64, reduction_ratio=16):
         super(CSAtt, self).__init__()
-        rdim = dict([(64,35), (128,28), (256,14) ,(512,7),(1024,4),(2048,4)])
-        self.adapt_pool = nn.AdaptiveAvgPool2d(rdim[channel])
+        # rdim = dict([(64,35), (128,28), (256,14) ,(512,7),(1024,4),(2048,4)])
+        # self.adapt_pool = nn.AdaptiveAvgPool2d(rdim[channel])
         
         self.gate_channels = channel
         self.mlp_D = nn.Sequential(
@@ -36,9 +36,8 @@ class CSAtt(nn.Module):
         device = x.device
 
         (batch_size, CH,h_i, w_i) = tuple(x.size())
-        shrink_fmaps = self.adapt_pool(x)
 
-        x_ap = torch.reshape(shrink_fmaps,(batch_size, CH,-1))
+        x_ap = torch.reshape(x,(batch_size, CH,-1))
         
         if ch_disc is None:
             x_gap = F.adaptive_avg_pool2d(x,(1,1))#
