@@ -36,7 +36,6 @@ class CSAtt(nn.Module):
         device = x.device
 
         (batch_size, CH,h_i, w_i) = tuple(x.size())
-        # shrink_fmaps = self.adapt_pool(x)
 
         x_ap = torch.reshape(x,(batch_size, CH,-1))
         
