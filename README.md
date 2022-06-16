@@ -14,6 +14,13 @@ Recently, convolutional neural networks (CNNs) with channel-wise feature refinin
 - mim install mmcv-full
 - pip install -v -e .
 
+## Train instruction
+bash ./tools/dist_train.sh \
+    ${CONFIG_FILE} \
+    ${GPU_NUM} \
+    [optional arguments]
+
+for further information please refer to: https://mmdetection.readthedocs.io/en/latest/1_exist_data_model.html
 ## MS-COCO object detection train
 bash ./tools/dist_train.sh configs/faster_rcnn/faster_rcnn_r50_fpn_2x_coco.py 8 --work-dir checkpoints/csa_r50
 
