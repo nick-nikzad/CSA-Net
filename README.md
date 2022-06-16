@@ -15,7 +15,7 @@ Recently, convolutional neural networks (CNNs) with channel-wise feature refinin
 - pip install -v -e .
 
 ## MS-COCO object detection train
-bash ./tools/dist_train.sh configs/faster_rcnn/faster_rcnn_r50_fpn_2x_coco.py 2 --work-dir checkpoints/csa_r50
+bash ./tools/dist_train.sh configs/faster_rcnn/faster_rcnn_r50_fpn_2x_coco.py 8 --work-dir checkpoints/csa_r50
 
 ## MS-COCO instance segmentation
-bash ./tools/dist_train.sh configs/mask_rcnn/mask_rcnn_r50_fpn_2x_coco.py 2 --work-dir checkpoints/csa_r50_inSegm
+bash ./tools/dist_train.sh configs/mask_rcnn/mask_rcnn_r50_fpn_2x_coco.py 8 --work-dir checkpoints/csa_r50_inSegm
